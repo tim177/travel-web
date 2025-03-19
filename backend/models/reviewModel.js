@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Tour = require('./tourModel');
 
-const reviewSchema = mongoose.Schema(
+const reviewSchema = new mongoose.Schema(
   {
     review: {
       type: String,
@@ -80,17 +80,20 @@ reviewSchema.statics.calcAverageRating = async function(tourId) {
 };
 
 reviewSchema.post('save', function() {
+  // this points to current review
   this.constructor.calcAverageRating(this.tour);
 });
 
-//findByIdAndUpdate
-//findByIdAndDelete
+// findByIdAndUpdate
+// findByIdAndDelete
 reviewSchema.pre(/^findOneAnd/, async function(next) {
   this.r = await this.findOne();
+  // console.log(this.r);
   next();
 });
 
 reviewSchema.post(/^findOneAnd/, async function() {
+  // await this.findOne(); does NOT work here, query has already executed
   await this.r.constructor.calcAverageRating(this.r.tour);
 });
 

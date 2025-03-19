@@ -35,7 +35,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true
   });
-  console.log(filteredBody);
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -60,9 +60,9 @@ exports.createUser = (req, res) => {
   });
 };
 
-//Do NOT Update password woth this!
-
-exports.getAllUsers = factory.getAll(User);
 exports.getUser = factory.getOne(User);
+exports.getAllUsers = factory.getAll(User);
+
+// Do NOT update passwords with this!
 exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

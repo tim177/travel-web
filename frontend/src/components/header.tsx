@@ -101,9 +101,12 @@ export function Header() {
           <Button variant="ghost" size="icon" aria-label="Account">
             <User className="h-5 w-5" />
           </Button>
-          <Button className="hidden md:inline-flex bg-primary hover:bg-primary/90">
+          <Link
+            className="hidden md:inline-flex bg-primary hover:bg-primary/90"
+            href="/login"
+          >
             Book Now
-          </Button>
+          </Link>
         </div>
       </div>
     </header>

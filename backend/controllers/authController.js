@@ -1,6 +1,6 @@
+const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -64,7 +64,7 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   //3) If everything ok send, token to the client
-  createSendToken(user, 201, res);
+  createSendToken(user, 200, res);
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -79,7 +79,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError('You are not logged in! Please login to get access', 401)
+      new AppError('You are not logged in! Please log in to get access.', 401)
     );
   }
 
@@ -151,8 +151,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'Token send to email!'
     });
   } catch (err) {
-    this.passwordResetToken = undefined;
-    this.passwordResetExpires = undefined;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
     return next(
@@ -173,7 +173,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   const user = await User.findOne({
     passwordResetToken: hashedToken,
-    passwordResetExpires: { $gte: Date.now() }
+    passwordResetExpires: { $gt: Date.now() }
   });
 
   // 2) If the token is not expired, and there is user, set the new password
@@ -189,7 +189,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   // 3) update changePasswordAt property for the user
   // 4) log the user in send JWT
-  createSendToken(user, 201, res);
+  createSendToken(user, 200, res);
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
@@ -207,5 +207,5 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   await user.save();
 
   //4) Log user in sernd JWT
-  createSendToken(user, 201, res);
+  createSendToken(user, 200, res);
 });

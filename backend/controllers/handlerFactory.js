@@ -1,6 +1,6 @@
-const APIFeatures = require('../utils/apiFeatures');
-const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
+const APIFeatures = require('../utils/apiFeatures');
 
 exports.deleteOne = Model =>
   catchAsync(async (req, res, next) => {
@@ -42,15 +42,15 @@ exports.createOne = Model =>
     res.status(201).json({
       status: 'success',
       data: {
-        tour: doc
+        data: doc
       }
     });
   });
 
-exports.getOne = (Model, popOption) =>
+exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findById(req.params.id);
-    if (popOption) query = query.populate(popOption);
+    if (popOptions) query = query.populate(popOptions);
 
     const doc = await query;
 
@@ -61,7 +61,7 @@ exports.getOne = (Model, popOption) =>
     res.status(200).json({
       status: 'success',
       data: {
-        doc
+        data: doc
       }
     });
   });
@@ -82,10 +82,9 @@ exports.getAll = Model =>
     // SEND RESPONSE
     res.status(200).json({
       status: 'success',
-      requestedAt: req.requestTime,
       results: doc.length,
       data: {
-        doc
+        data: doc
       }
     });
   });

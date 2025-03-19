@@ -1,12 +1,12 @@
+const crypto = require('crypto');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: [true, 'Please tell us your name']
+    required: [true, 'Please tell us your name!']
   },
   email: {
     type: String,
@@ -15,17 +15,15 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email']
   },
-  photo: {
-    type: String
-  },
+  photo: String,
   role: {
     type: String,
-    enum: ['admin', 'user', 'lead-guide', 'guide'],
+    enum: ['user', 'guide', 'lead-guide', 'admin'],
     default: 'user'
   },
   password: {
     type: String,
-    required: [true, 'Please provide your password'],
+    required: [true, 'Please provide a password'],
     minlength: 8,
     select: false
   },
@@ -42,7 +40,7 @@ const userSchema = new mongoose.Schema({
   },
   passwordChangedAt: Date,
   passwordResetToken: String,
-  passwordResetExpires: String,
+  passwordResetExpires: Date,
   active: {
     type: Boolean,
     default: true,
@@ -50,25 +48,24 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-// userSchema.pre('save', async function(next) {
-//   //Only run this function if password was actually modified
-//   if (!this.isModified('password')) return next();
+userSchema.pre('save', async function(next) {
+  // Only run this function if password was actually modified
+  if (!this.isModified('password')) return next();
 
-//   //Hash the password with the cost of 12
-//   this.password = await bcrypt.hash(this.password, 12);
+  // Hash the password with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
 
-//   //Delete passwordConfirm field
-//   this.passwordConfirm = undefined;
+  // Delete passwordConfirm field
+  this.passwordConfirm = undefined;
+  next();
+});
 
-//   next();
-// });
+userSchema.pre('save', function(next) {
+  if (!this.isModified('password') || this.isNew) return next();
 
-// userSchema.pre('save', function(next) {
-//   if (!this.isModified('password') || this.isNew) next();
-
-//   this.passwordChangedAt = Date.now() - 1000;
-//   next();
-// });
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
 
 userSchema.pre(/^find/, function(next) {
   //this point to currect query
@@ -93,6 +90,8 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
 
     return JWTTimestamp < changedTimestamp;
   }
+
+  // False means NOT changed
   return false;
 };
 
@@ -103,6 +102,8 @@ userSchema.methods.createPasswordResetTokens = function() {
     .createHash('sha256')
     .update(resetToken)
     .digest('hex');
+
+  console.log({ resetToken }, this.passwordResetToken);
 
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
 
