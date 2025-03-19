@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Menu, Globe, Search, User } from "lucide-react";
+import { Menu, Search, User, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
@@ -17,8 +17,11 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="left" className="w-[300px] sm:w-[400px]">
               <nav className="flex flex-col gap-6 text-lg font-medium">
-                <Link href="/" className="flex items-center gap-2 font-bold">
-                  <Globe className="h-5 w-5" />
+                <Link
+                  href="/"
+                  className="flex items-center gap-2 font-bold text-primary"
+                >
+                  <Leaf className="h-5 w-5" />
                   <span>Wanderlust</span>
                 </Link>
                 <Link
@@ -54,8 +57,11 @@ export function Header() {
               </nav>
             </SheetContent>
           </Sheet>
-          <Link href="/" className="flex items-center gap-2 font-bold">
-            <Globe className="h-5 w-5" />
+          <Link
+            href="/"
+            className="flex items-center gap-2 font-bold text-primary"
+          >
+            <Leaf className="h-5 w-5" />
             <span>Wanderlust</span>
           </Link>
         </div>
@@ -95,7 +101,9 @@ export function Header() {
           <Button variant="ghost" size="icon" aria-label="Account">
             <User className="h-5 w-5" />
           </Button>
-          <Button className="hidden md:inline-flex">Book Now</Button>
+          <Button className="hidden md:inline-flex bg-primary hover:bg-primary/90">
+            Book Now
+          </Button>
         </div>
       </div>
     </header>

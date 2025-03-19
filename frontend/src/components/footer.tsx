@@ -1,15 +1,18 @@
 import Link from "next/link";
-import { Globe, Mail, MapPin, Phone } from "lucide-react";
+import { Leaf, Mail, MapPin, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export function Footer() {
   return (
-    <footer className="bg-muted">
+    <footer className="bg-primary/5 border-t border-primary/10">
       <div className="container py-12 md:py-16">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center gap-2 font-bold">
-              <Globe className="h-5 w-5" />
+            <Link
+              href="/"
+              className="flex items-center gap-2 font-bold text-primary"
+            >
+              <Leaf className="h-5 w-5" />
               <span>Wanderlust</span>
             </Link>
             <p className="mt-4 text-muted-foreground">

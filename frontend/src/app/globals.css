@@ -2,21 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 120 25% 98%;
+    --foreground: 142 30% 10%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 142 30% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 142 30% 10%;
+
+    --primary: 142 70% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 120 40% 92%;
+    --secondary-foreground: 142 50% 25%;
+
+    --muted: 120 10% 96%;
+    --muted-foreground: 142 10% 40%;
+
+    --accent: 120 40% 92%;
+    --accent-foreground: 142 50% 25%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 142 20% 90%;
+    --input: 142 20% 90%;
+    --ring: 142 70% 35%;
+
+    --radius: 0.75rem;
+  }
+
+  .dark {
+    --background: 142 30% 10%;
+    --foreground: 120 25% 98%;
+
+    --card: 142 25% 15%;
+    --card-foreground: 120 25% 98%;
+
+    --popover: 142 25% 15%;
+    --popover-foreground: 120 25% 98%;
+
+    --primary: 142 70% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 142 30% 20%;
+    --secondary-foreground: 120 25% 98%;
+
+    --muted: 142 30% 20%;
+    --muted-foreground: 142 10% 70%;
+
+    --accent: 142 30% 20%;
+    --accent-foreground: 120 25% 98%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 142 30% 25%;
+    --input: 142 30% 25%;
+    --ring: 142 70% 45%;
   }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -24,4 +74,60 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Nature-inspired patterns and elements */
+.leaf-pattern {
+  background-color: rgba(240, 255, 240, 0.5);
+  background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 10C0 4.477 4.477 0 10 0s10 4.477 10 10-4.477 10-10 10S0 15.523 0 10zm10-8a8 8 0 100 16 8 8 0 000-16zm0 2a6 6 0 110 12 6 6 0 010-12z' fill='%2338A169' fill-opacity='0.05'/%3E%3C/svg%3E");
+}
+
+.forest-pattern {
+  background-color: rgba(240, 255, 240, 0.5);
+  background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2338A169' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Animations */
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1),
+    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+}
+
+/* Card enhancements */
+.nature-card {
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 100, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.nature-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 100, 0, 0.12);
+}
+
+/* Gradient backgrounds */
+.green-gradient {
+  background: linear-gradient(135deg, #38a169 0%, #68d391 100%);
+}
+
+.subtle-green-gradient {
+  background: linear-gradient(
+    135deg,
+    rgba(56, 161, 105, 0.1) 0%,
+    rgba(104, 211, 145, 0.1) 100%
+  );
 }
