@@ -31,11 +31,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
-      //This works on CREATE and SAVE!!!
+      // This only works on CREATE and SAVE!!!
       validator: function(el) {
         return el === this.password;
       },
-      message: 'password and confirm password are not matching'
+      message: 'Passwords are not the same!'
     }
   },
   passwordChangedAt: Date,
@@ -68,9 +68,8 @@ userSchema.pre('save', function(next) {
 });
 
 userSchema.pre(/^find/, function(next) {
-  //this point to currect query
+  // this points to the current query
   this.find({ active: { $ne: false } });
-
   next();
 });
 
@@ -95,7 +94,7 @@ userSchema.methods.changedPasswordAfter = function(JWTTimestamp) {
   return false;
 };
 
-userSchema.methods.createPasswordResetTokens = function() {
+userSchema.methods.createPasswordResetToken = function() {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   this.passwordResetToken = crypto

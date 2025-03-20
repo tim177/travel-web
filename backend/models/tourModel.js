@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 // const User = require('./userModel');
+// const validator = require('validator');
 
 const tourSchema = new mongoose.Schema(
   {
@@ -58,7 +59,7 @@ const tourSchema = new mongoose.Schema(
     summary: {
       type: String,
       trim: true,
-      required: [true, 'A tour must have a summary']
+      required: [true, 'A tour must have a description']
     },
     description: {
       type: String,
@@ -103,7 +104,6 @@ const tourSchema = new mongoose.Schema(
         day: Number
       }
     ],
-    // guides: Array
     guides: [
       {
         type: mongoose.Schema.ObjectId,
@@ -117,9 +117,8 @@ const tourSchema = new mongoose.Schema(
   }
 );
 
-//compund index  tourSchema.index({ price: 1 });
+// tourSchema.index({ price: 1 });
 tourSchema.index({ price: 1, ratingsAverage: -1 });
-//single field index
 tourSchema.index({ slug: 1 });
 tourSchema.index({ startLocation: '2dsphere' });
 
@@ -147,7 +146,7 @@ tourSchema.pre('save', function(next) {
 // });
 
 // tourSchema.pre('save', function(next) {
-//   console.log('will save document');
+//   console.log('Will save document...');
 //   next();
 // });
 
@@ -155,6 +154,7 @@ tourSchema.pre('save', function(next) {
 //   console.log(doc);
 //   next();
 // });
+
 // QUERY MIDDLEWARE
 // tourSchema.pre('find', function(next) {
 tourSchema.pre(/^find/, function(next) {
@@ -175,7 +175,6 @@ tourSchema.pre(/^find/, function(next) {
 
 tourSchema.post(/^find/, function(docs, next) {
   console.log(`Query took ${Date.now() - this.start} milliseconds!`);
-  // console.log(docs);
   next();
 });
 

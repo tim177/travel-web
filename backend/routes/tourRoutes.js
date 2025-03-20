@@ -1,14 +1,14 @@
 const express = require('express');
 const tourController = require('./../controllers/tourController');
 const authController = require('./../controllers/authController');
-const reviewRouter = require('../routes/reviewRoutes');
+const reviewRouter = require('./../routes/reviewRoutes');
 
 const router = express.Router();
 
 // router.param('id', tourController.checkID);
 
-//POST/GET tour/tour_id/reviews
-// GET tour/tour_id/reviews/review_id
+// POST /tour/234fad4/reviews
+// GET /tour/234fad4/reviews
 
 router.use('/:tourId/reviews', reviewRouter);
 
