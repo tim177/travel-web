@@ -1,9 +1,17 @@
+"use client";
 import Link from "next/link";
 import { Menu, Search, User, Leaf } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
 
 export function Header() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push("/profile");
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -98,7 +106,12 @@ export function Header() {
           <Button variant="ghost" size="icon" aria-label="Search">
             <Search className="h-5 w-5" />
           </Button>
-          <Button variant="ghost" size="icon" aria-label="Account">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Account"
+            onClick={handleClick}
+          >
             <User className="h-5 w-5" />
           </Button>
           <Link

@@ -21,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle, Bell, Lock, Shield } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
 export function ProfileSettings() {
@@ -37,31 +37,15 @@ export function ProfileSettings() {
     <div className="space-y-6">
       <Card className="nature-card border-primary/10 bg-white/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Account Settings</CardTitle>
+          <div className="flex items-center gap-2">
+            <Lock className="h-5 w-5 text-primary" />
+            <CardTitle>Account Security</CardTitle>
+          </div>
           <CardDescription>
-            Manage your account details and preferences
+            Manage your account security settings
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <div className="space-y-4">
-            <h3 className="text-lg font-medium">Email Address</h3>
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label htmlFor="email">Current Email</Label>
-                <Input id="email" value="sarah.johnson@example.com" readOnly />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-email">New Email</Label>
-                <div className="flex gap-2">
-                  <Input id="new-email" placeholder="Enter new email address" />
-                  <Button>Update</Button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <Separator />
-
           <div className="space-y-4">
             <h3 className="text-lg font-medium">Password</h3>
             <div className="grid gap-4 md:grid-cols-2">
@@ -110,7 +94,10 @@ export function ProfileSettings() {
           <Separator />
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium">Notification Preferences</h3>
+            <h3 className="text-lg font-medium flex items-center gap-2">
+              <Bell className="h-5 w-5 text-primary" />
+              <span>Notification Preferences</span>
+            </h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between rounded-lg border border-primary/10 bg-primary/5 p-4 hover-lift">
                 <div className="space-y-0.5">
@@ -146,18 +133,6 @@ export function ProfileSettings() {
                   </p>
                 </div>
                 <Switch id="travel-alerts" defaultChecked />
-              </div>
-
-              <div className="flex items-center justify-between rounded-lg border border-primary/10 bg-primary/5 p-4 hover-lift">
-                <div className="space-y-0.5">
-                  <Label htmlFor="newsletter" className="font-medium">
-                    Weekly Newsletter
-                  </Label>
-                  <p className="text-sm text-muted-foreground">
-                    Receive our weekly newsletter with travel inspiration.
-                  </p>
-                </div>
-                <Switch id="newsletter" />
               </div>
             </div>
           </div>
@@ -211,7 +186,10 @@ export function ProfileSettings() {
 
       <Card className="nature-card border-primary/10 bg-white/80 backdrop-blur-sm">
         <CardHeader>
-          <CardTitle>Privacy & Security</CardTitle>
+          <div className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-primary" />
+            <CardTitle>Privacy & Security</CardTitle>
+          </div>
           <CardDescription>
             Manage your privacy and security settings
           </CardDescription>
