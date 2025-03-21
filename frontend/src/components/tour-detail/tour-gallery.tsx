@@ -6,21 +6,25 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface TourGalleryProps {
+  name: string;
+  imageCover: string;
   images: string[];
-  title: string;
 }
 
-export function TourGallery({ images, title }: TourGalleryProps) {
+export function TourGallery({ name, imageCover, images }: TourGalleryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showLightbox, setShowLightbox] = useState(false);
 
+  // All images including cover
+  const allImages = [imageCover, ...images];
+
   const nextImage = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % allImages.length);
   };
 
   const prevImage = () => {
     setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
+      (prevIndex) => (prevIndex - 1 + allImages.length) % allImages.length
     );
   };
 
@@ -37,8 +41,8 @@ export function TourGallery({ images, title }: TourGalleryProps) {
     <>
       <div className="relative h-[50vh] md:h-[60vh] lg:h-[70vh] w-full bg-muted">
         <Image
-          src={images[0] || "/placeholder.svg"}
-          alt={title}
+          src={imageCover || "/placeholder.svg"}
+          alt={name}
           fill
           className="object-cover"
           priority
@@ -47,7 +51,7 @@ export function TourGallery({ images, title }: TourGalleryProps) {
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-10">
           <div className="container">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2">
-              {title}
+              {name}
             </h1>
           </div>
         </div>
@@ -63,7 +67,7 @@ export function TourGallery({ images, title }: TourGalleryProps) {
 
       <div className="container mt-4">
         <div className="grid grid-cols-4 gap-2">
-          {images.slice(0, 4).map((image, index) => (
+          {allImages.slice(0, 4).map((image, index) => (
             <div
               key={index}
               className="relative aspect-[4/3] cursor-pointer overflow-hidden rounded-md"
@@ -71,13 +75,13 @@ export function TourGallery({ images, title }: TourGalleryProps) {
             >
               <Image
                 src={image || "/placeholder.svg"}
-                alt={`${title} - Image ${index + 1}`}
+                alt={`${name} - Image ${index + 1}`}
                 fill
                 className="object-cover transition-transform hover:scale-105"
               />
-              {index === 3 && images.length > 4 && (
+              {index === 3 && allImages.length > 4 && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white font-medium">
-                  +{images.length - 4} more
+                  +{allImages.length - 4} more
                 </div>
               )}
             </div>
@@ -107,8 +111,8 @@ export function TourGallery({ images, title }: TourGalleryProps) {
 
           <div className="relative h-[80vh] w-[80vw]">
             <Image
-              src={images[currentIndex] || "/placeholder.svg"}
-              alt={`${title} - Image ${currentIndex + 1}`}
+              src={allImages[currentIndex] || "/placeholder.svg"}
+              alt={`${name} - Image ${currentIndex + 1}`}
               fill
               className="object-contain"
             />
@@ -124,7 +128,7 @@ export function TourGallery({ images, title }: TourGalleryProps) {
           </Button>
 
           <div className="absolute bottom-4 text-white">
-            {currentIndex + 1} / {images.length}
+            {currentIndex + 1} / {allImages.length}
           </div>
         </div>
       )}

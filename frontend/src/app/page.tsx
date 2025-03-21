@@ -6,7 +6,6 @@ import { Newsletter } from "@/components/newsletter";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Hero } from "@/components/hero";
-import { PopularDestinations } from "@/components/popular-destinations";
 
 export default function Home() {
   return (
@@ -15,7 +14,6 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <SearchForm />
-        <PopularDestinations />
         <section className="container py-12 md:py-16 lg:py-20">
           <div className="mb-10 text-center">
             <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
