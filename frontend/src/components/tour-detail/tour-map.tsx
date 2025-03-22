@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MapPin } from "lucide-react";
 import type { StartLocation, Location } from "@/types/tour";
-
+import type { LatLngTuple } from "leaflet";
 interface TourMapProps {
   startLocation: StartLocation;
   locations: Location[];
@@ -79,14 +79,22 @@ export function TourMap({ startLocation, locations }: TourMapProps) {
         });
 
         // Create a line connecting all points in order
-        const points = [
-          [startLocation.coordinates[1], startLocation.coordinates[0]],
-          ...sortedLocations.map((loc) => [
-            loc.coordinates[1],
-            loc.coordinates[0],
-          ]),
+        // const points = [
+        //   [startLocation.coordinates[1], startLocation.coordinates[0]],
+        //   ...sortedLocations.map((loc) => [
+        //     loc.coordinates[1],
+        //     loc.coordinates[0],
+        //   ]),
+        // ];
+        const points: LatLngTuple[] = [
+          [
+            startLocation.coordinates[1],
+            startLocation.coordinates[0],
+          ] as LatLngTuple,
+          ...sortedLocations.map(
+            (loc) => [loc.coordinates[1], loc.coordinates[0]] as LatLngTuple
+          ),
         ];
-
         L.polyline(points, {
           color: "var(--primary)",
           weight: 3,
