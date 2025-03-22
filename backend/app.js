@@ -14,7 +14,8 @@ const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
-const viewRouter = require('./routes/viewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
+// const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
@@ -24,8 +25,8 @@ const corsOptions = {
   credentials: true // Allow cookies or authorization headers
 };
 
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
+// app.set('views', path.join(__dirname, 'views'));
 
 //CORS
 app.use(cors(corsOptions));
@@ -83,10 +84,11 @@ app.use((req, res, next) => {
 });
 
 // 3) ROUTES
-app.use('/', viewRouter);
+// app.use('/', viewRouter);
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
