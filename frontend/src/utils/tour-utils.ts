@@ -1,9 +1,9 @@
-export const formatDate = (dateString: string): string => {
-  const date = new Date(dateString);
+export const formatDate = (dateInput: Date | string): string => {
+  const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
   // Check if the date is valid
   if (isNaN(date.getTime())) {
-    console.error(`Invalid date: ${dateString}`);
+    console.error(`Invalid date: ${dateInput}`);
     return "Invalid Date";
   }
 
